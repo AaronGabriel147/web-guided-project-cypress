@@ -60,7 +60,60 @@ describe('Quotes App', () => {
           .type("George Washington Carver")
           .should("have.value", "George Washington Carver");
       })
-   })
 
+    it('submit button enables when form is filled out', () => {
+        submitButton().should('not.be.enabled')
+        // select text input and type into it
+        textInput().type('hello there')
+        // select author input and type into it
+        authorInput().type('Obi Wan')
+        // select the submit button and check that it's enabled
+        submitButton().should('be.enabled')
+    })
+
+    it('cancel button can reset inputs and disable submit button', () => {
+        // type into text
+        textInput().type('hello there')
+        // select author input and type into it
+        authorInput().type('Obi Wan')
+        // select cancel button, and click it
+        cancelButton().click()
+        // check inputs are empty
+        textInput().should('have.value', '')
+        authorInput().should('have.value', '')
+        // check that submit button is disabled
+        submitButton().should('be.disabled')
+    })
+  })
+
+   describe.only('adding a new quote', () => {
+       it('can submit a new quote', () => {
+           // check the page does not have our quote on it
+        //    cy.contains(/quotes/i).should('exist') // regular expression, case invariant
+
+      // you must upgrade Cypress to 6.x.x for this to work!
+      // put "^6.0.0" in package.json
+      // and uncomment the intercept and wait below
+
+      // then comment out the deleteButton.click()
+      // and run the test TWICE
+      // you will see the test fail
+
+        //    cy.intercept('/').as('baseUrl')
+        //    cy.wait("@baseUrl");
+
+           cy.contains("have fun").should('not.exist') // regular expression, case invariant
+           // fill out the form and hit submit
+           textInput().type('have fun')
+           authorInput().type('Elton John')
+           submitButton().click()
+           // check the page now does have our quote on it
+           cy.contains(/have fun/i).should('exist') // regular expression, case invariant
+
+           const deleteButton = cy.contains(/have fun/).next().next()
+           deleteButton.click()
+       })
+       it('is a fake test', () => {})
+   })
 })
 

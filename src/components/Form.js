@@ -42,6 +42,7 @@ export default function Form(props) {
       <input
         name='text'
         type='text'
+        data-cy="text"              
         value={values.text}
         onChange={onChange}
         placeholder='Enter text'
